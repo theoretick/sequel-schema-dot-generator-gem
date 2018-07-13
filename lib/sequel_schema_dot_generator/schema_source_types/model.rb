@@ -5,7 +5,9 @@ module SequelSchemaDotGenerator
         relations = {}
 
         @tables.collect do |table_name|
-          model = table_name.to_s.singularize.classify.constantize
+          next if table_name == :schema_migrations
+
+          model = table_name.to_s.singularize.classify.constantize          
           model.associations.each do |assoc|
             assoc_info = model.association_reflection(assoc)
 
